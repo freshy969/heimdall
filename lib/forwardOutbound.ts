@@ -2,6 +2,7 @@ import addrs from "email-addresses";
 import { EmailAddress, ParsedMail } from "mailparser";
 import Mail from "nodemailer/lib/mailer";
 import { domain } from "./env";
+import repackageReceivedAttachments from "./utils/repackageReceivedAttachments";
 import sendEmail from "./utils/sendEmail";
 import senderAddressEncodeDecode from "./utils/senderAddressEncodeDecode";
 
@@ -82,7 +83,8 @@ export default async (unpureAlias: string, parsedMail: ParsedMail) => {
     html:
       parsedMail.html !== false
         ? (parsedMail.html as string) // Will never be `true`
-        : parsedMail.textAsHtml
+        : parsedMail.textAsHtml,
+    attachments: repackageReceivedAttachments(parsedMail.attachments)
   };
 
   await sendEmail(mailOptions);

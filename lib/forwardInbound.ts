@@ -2,6 +2,7 @@ import { ParsedMail } from "mailparser";
 import Mail from "nodemailer/lib/mailer";
 import { domain, email as personalEmail } from "./env";
 import getAliasDescription from "./getAliasDescription";
+import repackageReceivedAttachments from "./utils/repackageReceivedAttachments";
 import sendEmail from "./utils/sendEmail";
 import senderAddressEncodeDecode from "./utils/senderAddressEncodeDecode";
 
@@ -60,7 +61,8 @@ export default async (alias: string, parsedMail: ParsedMail): Promise<void> => {
     envelope: {
       from: `${alias}@${domain}`, // For semantics only; this has no significance
       to: personalEmail
-    }
+    },
+    attachments: repackageReceivedAttachments(parsedMail.attachments)
   };
 
   await sendEmail(mailOptions);

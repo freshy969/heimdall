@@ -42,7 +42,8 @@ it("should send outbound email from alias to original sender", async () => {
     },
     cc: undefined,
     subject: "Test subject",
-    html: "Test html\n"
+    html: "Test html\n",
+    attachments: []
   });
 });
 
@@ -121,7 +122,8 @@ it(`should discard all other recipients on the "to" and "cc" header lists`, asyn
     },
     cc: undefined,
     subject: "Test subject",
-    html: "Test html\n"
+    html: "Test html\n",
+    attachments: []
   });
 });
 
